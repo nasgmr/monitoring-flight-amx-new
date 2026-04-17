@@ -2,10 +2,22 @@
 
 import React, { useState, ChangeEvent } from 'react';
 import { uploadUlog } from '@/services/api';
+import dynamic from 'next/dynamic';
+
+const MapView = dynamic(() => import('@/components/map'), {
+    ssr: false,
+    loading: () => (
+        <div className="h-full w-full bg-gray-800 animate-pulse flex items-center justify-center text-gray-400">
+            Loading Map...
+        </div>
+    )
+});
 
 interface AnalysisResult {
     total_area_coverage?: string;
     monitoring_efficiency?: string;
+    polygon?: [number, number][];
+    starting_point?: [number, number];
 }
 
 export default function Home() {
@@ -54,8 +66,20 @@ export default function Home() {
 
                 {status === 'result' && (
                     <div style={{ display: 'flex', width: '100%', maxWidth: '1100px', justifyContent: 'space-between', gap: '64px' }}>
-                        <div style={{ backgroundColor: 'white', width: '600px', height: '450px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <span style={{ color: 'black', fontSize: '48px', fontWeight: 'bold' }}>Mapping</span>
+                        <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', padding: '24px', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.2)', width: '600px', height: '450px' }}>
+                            <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', color: '#FFD700' }}>FLIGHT PATH MAPPING</h2>
+                            <div style={{ height: '350px', width: '100%', backgroundColor: 'rgba(0, 0, 0, 0.2)', borderRadius: '8px', overflow: 'hidden' }}>
+                                {result ? (
+                                    <MapView
+                                        polygon={(result as any).polygon}
+                                        startPoint={(result as any).starting_point}
+                                    />
+                                ) : (
+                                    <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#9ca3af', fontStyle: 'italic' }}>
+                                        Upload ULog file to see mapping
+                                    </div>
+                                )}
+                            </div>
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '40px', width: '100%' }}>
                             <div>
