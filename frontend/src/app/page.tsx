@@ -18,7 +18,7 @@ export default function Home() {
             setStatus('loading');
             try {
                 const response = await uploadUlog(selectedFile);
-                setResult(response.data || response);
+                setResult(response.data.data);
                 setStatus('result');
             } catch (err) {
                 alert("Gagal terhubung ke Backend!");

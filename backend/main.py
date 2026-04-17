@@ -19,7 +19,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.post("/")
+@app.get("/")
 async def root():
     return {"message": "Backend API is running! /analyze"}
 
