@@ -50,7 +50,7 @@ export default function Home() {
                 {status === 'idle' && (
                     <div style={{ textAlign: 'center' }}>
                         <h2 style={{ fontSize: '40px', fontWeight: 'bold', marginBottom: '24px' }}>Upload Data</h2>
-                        <label style={{ cursor: 'pointer', backgroundColor: '#FFD700', width: '220px', height: '80px', borderRadius: '12px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <label style={{ cursor: 'pointer', backgroundColor: '#FFDD00', width: '220px', height: '80px', borderRadius: '12px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <input type="file" className="hidden" accept=".ulg" style={{ display: 'none' }} onChange={handleFileChange} />
                             <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -67,7 +67,7 @@ export default function Home() {
                 {status === 'result' && (
                     <div style={{ display: 'flex', width: '100%', maxWidth: '1100px', justifyContent: 'space-between', gap: '64px' }}>
                         <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', padding: '24px', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.2)', width: '600px', height: '450px' }}>
-                            <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', color: '#FFD700' }}>FLIGHT PATH MAPPING</h2>
+                            <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', color: '#FFDD00' }}>FLIGHT PATH MAPPING</h2>
                             <div style={{ height: '350px', width: '100%', backgroundColor: 'rgba(0, 0, 0, 0.2)', borderRadius: '8px', overflow: 'hidden' }}>
                                 {result ? (
                                     <MapView
@@ -90,13 +90,23 @@ export default function Home() {
                                 <h3 style={{ fontSize: '24px', fontWeight: 'bold' }}>Monitoring Efficiency</h3>
                                 <p style={{ fontSize: '48px', fontWeight: 'bold' }}>{result?.monitoring_efficiency || 'Number'}</p>
                             </div>
-                            <button style={{ backgroundColor: '#FFD700', width: '220px', height: '80px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', cursor: 'pointer' }}>
-                                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                    <polyline points="7 10 12 15 17 10"></polyline>
-                                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                                </svg>
-                            </button>
+                            <div style={{ display: 'flex', gap: '10px' }}>
+                                {/* KML Button */}
+                                <button
+                                    onClick={() => window.location.href = 'http://localhost:8000/download/kml'}
+                                    style={{ backgroundColor: '#FFDD00', padding: '10px 20px', borderRadius: '8px', border: 'none', cursor: 'pointer', fontWeight: 'bold', color: 'black' }}
+                                >
+                                    Download KML
+                                </button>
+
+                                {/* Tombol PDF */}
+                                <button
+                                    onClick={() => window.location.href = 'http://localhost:8000/download/pdf'}
+                                    style={{ backgroundColor: '#ffffff', padding: '10px 20px', borderRadius: '8px', border: 'none', cursor: 'pointer', fontWeight: 'bold', color: 'black' }}
+                                >
+                                    Download PDF
+                                </button>
+                            </div>
                         </div>
                     </div>
                 )}
