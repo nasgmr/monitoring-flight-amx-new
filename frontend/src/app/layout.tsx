@@ -11,10 +11,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Tambahkan baris ini untuk memaksa CSS Leaflet jalan */}
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
       </head>
-      <body>{children}</body>
+      <body style={{ margin: 0, padding: 0, backgroundColor: '#4a4a4a' }}>{children}</body>
     </html>
   )
 }

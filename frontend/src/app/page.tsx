@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic';
 const MapView = dynamic(() => import('@/components/map'), {
     ssr: false,
     loading: () => (
-        <div className="h-full w-full bg-gray-800 animate-pulse flex items-center justify-center text-gray-400">
+        <div style={{height: '100%', width: '100%', backgroundColor: '#e5e7eb', display: 'flex', alignItems: 'center',  justifyContent: 'center', color: '#6b7280', fontWeight: 'bold'}}>
             Loading Map...
         </div>
     )
@@ -15,7 +15,9 @@ const MapView = dynamic(() => import('@/components/map'), {
 
 interface AnalysisResult {
     total_area_coverage?: string;
-    monitoring_efficiency?: string;
+    flight_duration?: string;
+    total_distance?: string;
+    average_altitude?: string;
     polygon?: [number, number][];
     starting_point?: [number, number];
 }
@@ -33,24 +35,31 @@ export default function Home() {
                 setResult(response.data.data);
                 setStatus('result');
             } catch (err) {
-                alert("Gagal terhubung ke Backend!");
+                alert("Failed to connect to Backend!");
                 setStatus('idle');
             }
         }
     };
 
     return (
-        <div style={{ minHeight: '100vh', backgroundColor: '#4a4a4a', color: 'white', fontFamily: 'system-ui, sans-serif', display: 'flex', flexDirection: 'column' }}>
-            <header style={{ padding: '32px 40px', display: 'flex', alignItems: 'center', gap: '32px' }}>
-                <img src="/logo.png" alt="AMX UAV" style={{ height: '80px', width: 'auto', objectFit: 'contain' }} />
-                <h1 style={{ fontSize: '48px', fontWeight: 'bold', margin: 0 }}>Monitoring Flight</h1>
+        <div style={{ minHeight: '100vh', backgroundColor: '#4a4a4a', color: 'white', fontFamily: 'system-ui, -apple-system, sans-serif', display: 'flex', flexDirection: 'column' }}>
+            <header style={{ backgroundColor: 'black', padding: '16px 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '20px'}}>
+                    <img src="/logo.png" alt="AMX UAV Logo" style={{ height: '50px', width: 'auto', objectFit: 'contain' }} />
+                    <h1 style={{ fontSize: '32px', fontWeight: 'bold', margin: 0 }}> Monitoring Flight </h1>
+                </div>
+                <button 
+                    onClick={() => window.location.href = 'http://localhost:3000'}
+                    style={{ backgroundColor: '#FFDD00', color: 'black', padding: '12px 24px', borderRadius: '8px', fontWeight: 'bold', fontSize: '18px', border: 'none', cursor: 'pointer' }}>
+                    Visit Our Page
+                </button>
             </header>
 
-            <main style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+            <main style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '40px', width: '100%' }}>
                 {status === 'idle' && (
                     <div style={{ textAlign: 'center' }}>
                         <h2 style={{ fontSize: '40px', fontWeight: 'bold', marginBottom: '24px' }}>Upload Data</h2>
-                        <label style={{ cursor: 'pointer', backgroundColor: '#FFDD00', width: '220px', height: '80px', borderRadius: '12px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <label style={{ cursor: 'pointer', backgroundColor: '#FFDD00', width: '220px', height: '80px', borderRadius: '12px', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '0 auto' }}>
                             <input type="file" className="hidden" accept=".ulg" style={{ display: 'none' }} onChange={handleFileChange} />
                             <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -65,45 +74,54 @@ export default function Home() {
                 {status === 'loading' && <h2 style={{ fontSize: '40px', fontWeight: 'bold' }}>Processing...</h2>}
 
                 {status === 'result' && (
-                    <div style={{ display: 'flex', width: '100%', maxWidth: '1100px', justifyContent: 'space-between', gap: '64px' }}>
-                        <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', padding: '24px', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.2)', width: '600px', height: '450px' }}>
-                            <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '16px', color: '#FFDD00' }}>FLIGHT PATH MAPPING</h2>
-                            <div style={{ height: '350px', width: '100%', backgroundColor: 'rgba(0, 0, 0, 0.2)', borderRadius: '8px', overflow: 'hidden' }}>
-                                {result ? (
-                                    <MapView
-                                        polygon={(result as any).polygon}
-                                        startPoint={(result as any).starting_point}
-                                    />
-                                ) : (
-                                    <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#9ca3af', fontStyle: 'italic' }}>
-                                        Upload ULog file to see mapping
-                                    </div>
-                                )}
-                            </div>
+                    <div style={{ display: 'flex', width: '100%', maxWidth: '1200px', gap: '30px', alignItems: 'stretch', minHeight: '600px' }}>
+                        {/* Perbaikan: Menggunakan flex: 2 daripada width fixed agar peta melebar mengikuti desain */}
+                        <div style={{ flex: '2', backgroundColor: 'white', padding: '10px', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.2)', display: 'flex', flexDirection: 'column' }}>
+                            {result?.polygon ? (
+                                <MapView polygon={result.polygon} startPoint={result.starting_point as [number, number]} />
+                            ) : (
+                                <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <h2 style={{ color: 'black', fontSize: '36px', fontWeight: 'bold' }}> Polygonized Mapping </h2>
+                                </div>
+                            )}
                         </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '40px', width: '100%' }}>
-                            <div>
-                                <h3 style={{ fontSize: '24px', fontWeight: 'bold' }}>Total Area Coverage</h3>
-                                <p style={{ fontSize: '48px', fontWeight: 'bold' }}>{result?.total_area_coverage || 'Number'}</p>
+
+                        <div style={{ flex: '1', backgroundColor: '#323232', padding: '30px', display: 'flex', flexDirection: 'column', gap: '20px', borderRadius: '8px', justifyContent: 'center' }}>
+                            <h2 style={{ fontSize: '32px', fontWeight: 'bold', margin: '0 0 10px 0', textAlign: 'center', color: 'white' }}>
+                                Mapping Result
+                            </h2>
+
+                            <div style={{ backgroundColor: '#8A8A8A', padding: '30px 20px', textAlign: 'center', borderRadius: '8px' }}>
+                                <p style={{ margin: '0 0 15px 0', fontSize: '22px',  fontWeight: 'bold', color: 'white' }}> Total Area Coverage </p>
+                                <p style={{ margin: 0, fontSize: '36px', fontWeight: 'bold', color: 'white' }}>
+                                    {result?.total_area_coverage || 'Number'}
+                                </p>
                             </div>
-                            <div>
-                                <h3 style={{ fontSize: '24px', fontWeight: 'bold' }}>Monitoring Efficiency</h3>
-                                <p style={{ fontSize: '48px', fontWeight: 'bold' }}>{result?.monitoring_efficiency || 'Number'}</p>
+
+                            <div style={{ backgroundColor: '#8A8A8A', padding: '25px', display: 'flex', flexDirection: 'column', gap: '15px', borderRadius: '8px', color: 'white', fontSize: '18px' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <span style={{ fontWeight: 'bold' }}> Flight Duration: </span>
+                                    <span>{result?.flight_duration || '-'}</span>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <span style={{ fontWeight: 'bold' }}> Total Distance: </span>
+                                    <span>{result?.total_distance || '-'}</span>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <span style={{ fontWeight: 'bold' }}> Average Altitude: </span>
+                                    <span>{result?.average_altitude || '-'}</span>
+                                </div>
                             </div>
-                            <div style={{ display: 'flex', gap: '10px' }}>
-                                {/* KML Button */}
+
+                            <div style={{ display: 'flex', gap: '15px', marginTop: '20px' }}>
                                 <button
-                                    onClick={() => window.location.href = 'http://localhost:8000/download/kml'}
-                                    style={{ backgroundColor: '#FFDD00', padding: '10px 20px', borderRadius: '8px', border: 'none', cursor: 'pointer', fontWeight: 'bold', color: 'black' }}
-                                >
+                                    onClick={() => window.location.href = 'http://localhost:5000/download/kml'}
+                                    style={{ flex: 1, backgroundColor: '#FFD000', color: 'black', padding: '15px', fontWeight: 'bold', fontSize: '16px', border: 'none', cursor: 'pointer', borderRadius: '8px' }}>
                                     Download KML
                                 </button>
-
-                                {/* Tombol PDF */}
                                 <button
-                                    onClick={() => window.location.href = 'http://localhost:8000/download/pdf'}
-                                    style={{ backgroundColor: '#ffffff', padding: '10px 20px', borderRadius: '8px', border: 'none', cursor: 'pointer', fontWeight: 'bold', color: 'black' }}
-                                >
+                                    onClick={() => window.location.href = 'http://localhost:5000/download/pdf'}
+                                    style={{ flex: 1, backgroundColor: '#FFD000', color: 'black', padding: '15px', fontWeight: 'bold', fontSize: '16px', border: 'none', cursor: 'pointer', borderRadius: '8px' }}>
                                     Download PDF
                                 </button>
                             </div>

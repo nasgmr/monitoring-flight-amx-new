@@ -27,33 +27,35 @@ async def root():
 
 @app.post("/analyze")
 async def analyze_flight(file: UploadFile = File(...)):
+    if not os.path.exists("data"):
+        os.makedirs("data")
+
     file_path = os.path.join("data", file.filename)
 
     try:
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
 
-        csv_path = convert_ulog_to_csv(file_path)
+        csv_path, flight_metrics = convert_ulog_to_csv(file_path)
 
-        if csv_path:
+        if csv_path and flight_metrics:
             analysis_result = run_coverage_analysis(csv_path)
             
-            analysis_data_for_export = {
+            final_data = {
                 "total_area_coverage": f"{round(analysis_result['area'], 2)} Ha",
-                "monitoring_efficiency": f"{round(analysis_result['eff'], 2)} %",
-                "polygon": analysis_result['polygon'] # Ini yang penting buat staticmap
+                "flight_duration": flight_metrics["flight_duration"],
+                "total_distance": flight_metrics["total_distance"],
+                "average_altitude": flight_metrics["average_altitude"],
+                "polygon": analysis_result['polygon']
             }
 
-            create_kml(analysis_result['polygon'], filename="flight_report.kml")
-            
-            create_pdf(analysis_data_for_export, filename="flight_report.pdf")
+            create_kml(final_data['polygon'], filename="flight_report.kml")
+            create_pdf(final_data, filename="flight_report.pdf")
 
             return {
                 "status": "success",
                 "data": {
-                    "total_area_coverage": analysis_data_for_export["total_area_coverage"],
-                    "monitoring_efficiency": analysis_data_for_export["monitoring_efficiency"],
-                    "polygon": analysis_result['polygon'],
+                    **final_data,
                     "starting_point": [analysis_result['s_lat'], analysis_result['s_lon']]
                 }
             }
@@ -65,14 +67,12 @@ async def analyze_flight(file: UploadFile = File(...)):
     
 @app.get("/download/kml")
 async def download_kml():
-    file_path = "flight_report.kml"
-    if os.path.exists(file_path):
-        return FileResponse(path=file_path, filename="AMX_Flight_Report.kml")
-    return {"error": "File KML tidak ditemukan"}
+    return FileResponse(path="flight_report.kml", filename="Flight_Report.kml")
 
 @app.get("/download/pdf")
 async def download_pdf():
-    file_path = "flight_report.pdf"
-    if os.path.exists(file_path):
-        return FileResponse(path=file_path, filename="AMX_Monitoring_Report.pdf")
-    return {"error": "File PDF tidak ditemukan"}
+    return FileResponse(path="flight_report.pdf", filename="Flight_Report.pdf")
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=5000)
