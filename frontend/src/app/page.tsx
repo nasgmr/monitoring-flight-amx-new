@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import { uploadUlog } from '@/services/api';
 import dynamic from 'next/dynamic';
 
@@ -23,16 +23,39 @@ interface AnalysisResult {
 }
 
 export default function Home() {
-    const [status, setStatus] = useState<'idle' | 'loading' | 'result'>('idle');
+    // 1. Status awal 'checking' untuk pengecekan session saat pertama kali load
+    const [status, setStatus] = useState<'idle' | 'checking' | 'uploading' | 'result'>('checking');
     const [result, setResult] = useState<AnalysisResult | null>(null);
 
+    // 2. Efek untuk memulihkan data dari session saat refresh
+    useEffect(() => {
+        const savedResult = sessionStorage.getItem('last_analysis');
+        if (savedResult) {
+            try {
+                setResult(JSON.parse(savedResult));
+                setStatus('result');
+            } catch (error) {
+                console.error("Session data corrupted:", error);
+                sessionStorage.removeItem('last_analysis');
+                setStatus('idle');
+            }
+        } else {
+            setStatus('idle');
+        }
+    }, []);
+
+    // 3. Fungsi upload file (Processing)
     const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const selectedFile = e.target.files[0];
-            setStatus('loading');
+            setStatus('uploading'); // Muncul tulisan "Processing..."
             try {
                 const response = await uploadUlog(selectedFile);
-                setResult(response.data.data);
+                const data = response.data.data;
+                
+                setResult(data);
+                // Simpan ke sessionStorage (tahan refresh, hapus saat close tab)
+                sessionStorage.setItem('last_analysis', JSON.stringify(data));
                 setStatus('result');
             } catch (err) {
                 alert("Failed to connect to Backend!");
@@ -41,8 +64,26 @@ export default function Home() {
         }
     };
 
+    // 4. Fungsi Reset untuk pindah ke file lain
+    const handleReset = () => {
+        sessionStorage.removeItem('last_analysis');
+        setResult(null);
+        setStatus('idle');
+    };
+
+    // LAYAR LOADING AWAL: Menghindari flicker menu upload saat refresh
+    if (status === 'checking') {
+        return (
+            <div style={{ minHeight: '100vh', backgroundColor: '#4a4a4a', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
+                <h2 style={{ fontSize: '32px', fontWeight: 'bold' }}>Checking Session...</h2>
+            </div>
+        );
+    }
+
     return (
         <div style={{ minHeight: '100vh', backgroundColor: '#4a4a4a', color: 'white', fontFamily: 'system-ui, -apple-system, sans-serif', display: 'flex', flexDirection: 'column' }}>
+            
+            {/* --- HEADER --- */}
             <header style={{ backgroundColor: 'black', padding: '16px 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '20px'}}>
                     <img src="/logo.png" alt="AMX UAV Logo" style={{ height: '50px', width: 'auto', objectFit: 'contain' }} />
@@ -55,7 +96,10 @@ export default function Home() {
                 </button>
             </header>
 
+            {/* --- MAIN CONTENT --- */}
             <main style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '40px', width: '100%' }}>
+                
+                {/* STATUS: IDLE (Upload Menu) */}
                 {status === 'idle' && (
                     <div style={{ textAlign: 'center' }}>
                         <h2 style={{ fontSize: '40px', fontWeight: 'bold', marginBottom: '24px' }}>Upload Data</h2>
@@ -71,11 +115,14 @@ export default function Home() {
                     </div>
                 )}
 
-                {status === 'loading' && <h2 style={{ fontSize: '40px', fontWeight: 'bold' }}>Processing...</h2>}
+                {/* STATUS: UPLOADING (Processing Screen) */}
+                {status === 'uploading' && <h2 style={{ fontSize: '40px', fontWeight: 'bold' }}>Processing...</h2>}
 
+                {/* STATUS: RESULT (Dashboard Results) */}
                 {status === 'result' && (
                     <div style={{ display: 'flex', width: '100%', maxWidth: '1200px', gap: '30px', alignItems: 'stretch', minHeight: '600px' }}>
-                        {/* Perbaikan: Menggunakan flex: 2 daripada width fixed agar peta melebar mengikuti desain */}
+                        
+                        {/* Kiri: Map Display */}
                         <div style={{ flex: '2', backgroundColor: 'white', padding: '10px', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.2)', display: 'flex', flexDirection: 'column' }}>
                             {result?.polygon ? (
                                 <MapView polygon={result.polygon} startPoint={result.starting_point as [number, number]} />
@@ -86,18 +133,28 @@ export default function Home() {
                             )}
                         </div>
 
+                        {/* Kanan: Stats & Action Buttons */}
                         <div style={{ flex: '1', backgroundColor: '#323232', padding: '30px', display: 'flex', flexDirection: 'column', gap: '20px', borderRadius: '8px', justifyContent: 'center' }}>
-                            <h2 style={{ fontSize: '32px', fontWeight: 'bold', margin: '0 0 10px 0', textAlign: 'center', color: 'white' }}>
+                            <h2 style={{ fontSize: '32px', fontWeight: 'bold', margin: '0', textAlign: 'center', color: 'white' }}>
                                 Mapping Result
                             </h2>
 
+                            {/* Tombol Analyze Another (Compact & Outline) */}
+                            <button
+                                onClick={handleReset}
+                                style={{ backgroundColor: 'transparent', color: '#FFD000', padding: '8px', fontWeight: 'bold', fontSize: '14px', border: '1px solid #FFD000', cursor: 'pointer', borderRadius: '8px' }}>
+                                🔄 Analyze Another File
+                            </button>
+
+                            {/* Big Stats: Total Area */}
                             <div style={{ backgroundColor: '#8A8A8A', padding: '30px 20px', textAlign: 'center', borderRadius: '8px' }}>
                                 <p style={{ margin: '0 0 15px 0', fontSize: '22px',  fontWeight: 'bold', color: 'white' }}> Total Area Coverage </p>
                                 <p style={{ margin: 0, fontSize: '36px', fontWeight: 'bold', color: 'white' }}>
-                                    {result?.total_area_coverage || 'Number'}
+                                    {result?.total_area_coverage || '0.00 Ha'}
                                 </p>
                             </div>
 
+                            {/* Detail Stats Grid */}
                             <div style={{ backgroundColor: '#8A8A8A', padding: '25px', display: 'flex', flexDirection: 'column', gap: '15px', borderRadius: '8px', color: 'white', fontSize: '18px' }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <span style={{ fontWeight: 'bold' }}> Flight Duration: </span>
@@ -113,7 +170,8 @@ export default function Home() {
                                 </div>
                             </div>
 
-                            <div style={{ display: 'flex', gap: '15px', marginTop: '20px' }}>
+                            {/* Download Buttons (Compact Port 5000) */}
+                            <div style={{ display: 'flex', gap: '15px', marginTop: '10px' }}>
                                 <button
                                     onClick={() => window.location.href = 'http://localhost:5000/download/kml'}
                                     style={{ flex: 1, backgroundColor: '#FFD000', color: 'black', padding: '15px', fontWeight: 'bold', fontSize: '16px', border: 'none', cursor: 'pointer', borderRadius: '8px' }}>
@@ -130,6 +188,7 @@ export default function Home() {
                 )}
             </main>
 
+            {/* --- FOOTER --- */}
             <footer style={{ width: '100%', textAlign: 'center', padding: '32px 0', color: '#d1d5db' }}>
                 Copyright © 2026 AMX UAV
             </footer>
