@@ -1,6 +1,6 @@
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import JSONResponse, FileResponse
 import shutil
 import os
 
@@ -20,6 +20,16 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+def cleanup_files(*file_paths):
+    """Delete file after sent to client"""
+    for path in file_paths:
+        try:
+            if os.path.exists(path):
+                os.remove(path)
+                print(f"Deleted Successfully: {path}")
+        except Exception as e:
+            print(f"DEBUG: Failed to delete {path}. Error: {e}")
 
 @app.get("/")
 async def root():
@@ -66,12 +76,20 @@ async def analyze_flight(file: UploadFile = File(...)):
         return {"status": "error", "message": str(e)}
     
 @app.get("/download/kml")
-async def download_kml():
-    return FileResponse(path="flight_report.kml", filename="Flight_Report.kml")
+async def download_kml(background_tasks: BackgroundTasks):
+    kml_path = "flight_report.kml"
+    if os.path.exists(kml_path):
+        background_tasks.add_task(cleanup_files, kml_path)
+        return FileResponse(path=kml_path, filename="Flight_Report.kml")
+    return JSONResponse(status_code=404, content={"message": "File not found"})
 
 @app.get("/download/pdf")
-async def download_pdf():
-    return FileResponse(path="flight_report.pdf", filename="Flight_Report.pdf")
+async def download_pdf(background_tasks: BackgroundTasks):
+    pdf_path = "flight_report.pdf"
+    if os.path.exists(pdf_path):
+        background_tasks.add_task(cleanup_files, pdf_path)
+        return FileResponse(path=pdf_path, media_type='application/pdf', filename="Flight_Report.pdf")
+    return JSONResponse(status_code=404, content={"message": "File not found"})
 
 if __name__ == "__main__":
     import uvicorn
