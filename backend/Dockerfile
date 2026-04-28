@@ -8,7 +8,7 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy all files from backend to the server
+# Copy all files from backend to server
 COPY . .
 
 # Create data folder to avoid errors when starting
