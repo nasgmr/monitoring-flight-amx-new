@@ -1,0 +1,22 @@
+# Ignore file cache Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual environment folders
+venv/
+.venv/
+env/
+
+# Ignore git and IDE files
+.git
+.gitignore
+.vscode/
+
+# Ignore local data folder (so the server starts clean)
+data/
+
+# Ignore drone log files that might still be on the laptop
+*.ulg
+*.csv
