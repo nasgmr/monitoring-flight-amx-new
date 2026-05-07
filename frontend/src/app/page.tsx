@@ -106,7 +106,7 @@ export default function Home() {
                 </div>
                 <button 
                     onClick={() => window.location.href = 'http://localhost:3000'}
-                    style={{ backgroundColor: '#FFDD00', color: 'black', padding: isMobile ? '10px 16px' : '12px 24px', borderRadius: '8px', fontWeight: 'bold', fontSize: isMobile ? '14px' : '18px', border: 'none', cursor: 'pointer', width: isMobile ? '100%' : 'auto' }}>
+                    style={{ backgroundColor: '#959595', color: 'black', padding: isMobile ? '10px 16px' : '12px 24px', borderRadius: '8px', fontWeight: 'bold', fontSize: isMobile ? '14px' : '18px', border: 'none', cursor: 'pointer', width: isMobile ? '100%' : 'auto' }}>
                     Visit Our Page
                 </button>
             </header>
@@ -125,7 +125,7 @@ export default function Home() {
                 {status === 'idle' && (
                     <div style={{ textAlign: 'center', width: '100%', boxSizing: 'border-box' }}>
                         <h2 style={{ fontSize: isMobile ? '28px' : '40px', fontWeight: 'bold', marginBottom: '24px' }}>Upload Data</h2>
-                        <label style={{ cursor: 'pointer', backgroundColor: '#FFDD00', width: '180px', height: '70px', borderRadius: '12px', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '0 auto' }}>
+                        <label style={{ cursor: 'pointer', backgroundColor: '#959595', width: '180px', height: '70px', borderRadius: '12px', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '0 auto' }}>
                             <input type="file" className="hidden" accept=".ulg" style={{ display: 'none' }} onChange={handleFileChange} />
                             <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -139,7 +139,7 @@ export default function Home() {
 
                 {status === 'uploading' && (
                     <div style={{ textAlign: 'center', width: '100%', boxSizing: 'border-box' }}>
-                        <div style={{ border: '6px solid rgba(255, 255, 255, 0.1)', borderTop: '6px solid #FFDD00', borderRadius: '50%', width: '50px', height: '50px', animation: 'spin 1s linear infinite', margin: '0 auto 20px' }}></div>
+                        <div style={{ border: '6px solid rgba(255, 255, 255, 0.1)', borderTop: '6px solid #959595', borderRadius: '50%', width: '50px', height: '50px', animation: 'spin 1s linear infinite', margin: '0 auto 20px' }}></div>
                         <h2 style={{ fontSize: '32px', fontWeight: 'bold' }}>Processing...</h2>
                         <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
                     </div>
@@ -183,10 +183,10 @@ export default function Home() {
                                 <h2 style={{ fontSize: isMobile ? '24px' : '32px', fontWeight: 'bold', margin: '0', textAlign: 'center', color: 'white' }}>
                                     Mapping Result
                                 </h2>
-                                <button onClick={handleReset} style={{ backgroundColor: 'transparent', color: '#FFD000', padding: '8px', fontWeight: 'bold', fontSize: '12px', border: '1px solid #FFD000', cursor: 'pointer', borderRadius: '8px' }}>🔄 Analyze Another File</button>
+                                <button onClick={handleReset} style={{ backgroundColor: 'transparent', color: '#DADEDF', padding: '8px', fontWeight: 'bold', fontSize: '12px', border: '1px solid #DADEDF', cursor: 'pointer', borderRadius: '8px' }}>🔄 Analyze Another File</button>
                                 <div style={{ backgroundColor: '#8A8A8A', padding: isMobile ? '20px' : '30px 20px', textAlign: 'center', borderRadius: '8px' }}>
                                     <p style={{ margin: '0 0 10px 0', fontSize: isMobile ? '16px' : '22px',  fontWeight: 'bold', color: 'white' }}> Total Area Coverage </p>
-                                    <p style={{ margin: 0, fontSize: isMobile ? '28px' : '36px', fontWeight: 'bold', color: '#FFD000' }}>{result?.total_area_coverage || '0.00 Ha'}</p>
+                                    <p style={{ margin: 0, fontSize: isMobile ? '28px' : '36px', fontWeight: 'bold', color: '#DADEDF' }}>{result?.total_area_coverage || '0.00 Ha'}</p>
                                 </div>
                                 <div style={{ backgroundColor: '#8A8A8A', padding: isMobile ? '15px' : '25px', display: 'flex', flexDirection: 'column', gap: '10px', borderRadius: '8px', color: 'white', fontSize: isMobile ? '15px' : '18px' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between' }}><span> Duration: </span><span>{result?.flight_duration || '-'}</span></div>
@@ -194,8 +194,8 @@ export default function Home() {
                                     <div style={{ display: 'flex', justifyContent: 'space-between' }}><span> Avg Alt: </span><span>{result?.average_altitude || '-'}</span></div>
                                 </div>
                                 <div style={{ display: 'flex', gap: '10px', marginTop: '5px' }}>
-                                    <button onClick={() => window.location.href = 'http://localhost:5000/download/kml'} style={{ flex: 1, backgroundColor: '#FFD000', color: 'black', padding: '12px', fontWeight: 'bold', fontSize: isMobile ? '13px' : '16px', border: 'none', cursor: 'pointer', borderRadius: '8px' }}>KML</button>
-                                    <button onClick={() => window.location.href = 'http://localhost:5000/download/pdf'} style={{ flex: 1, backgroundColor: '#FFD000', color: 'black', padding: '12px', fontWeight: 'bold', fontSize: isMobile ? '13px' : '16px', border: 'none', cursor: 'pointer', borderRadius: '8px' }}>PDF</button>
+                                    <button onClick={() => window.location.href = 'http://localhost:5000/download/kml'} style={{ flex: 1, backgroundColor: '#DADEDF', color: 'black', padding: '12px', fontWeight: 'bold', fontSize: isMobile ? '13px' : '16px', border: 'none', cursor: 'pointer', borderRadius: '8px' }}>KML</button>
+                                    <button onClick={() => window.location.href = 'http://localhost:5000/download/pdf'} style={{ flex: 1, backgroundColor: '#DADEDF', color: 'black', padding: '12px', fontWeight: 'bold', fontSize: isMobile ? '13px' : '16px', border: 'none', cursor: 'pointer', borderRadius: '8px' }}>PDF</button>
                                 </div>
                             </div>
                         </div>

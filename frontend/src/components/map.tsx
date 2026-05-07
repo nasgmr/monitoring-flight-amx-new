@@ -40,9 +40,9 @@ export default function MapView({ polygon, startPoint }: { polygon: [number, num
                     <Polygon
                         positions={polygon}
                         pathOptions={{
-                            color: '#FFDD00',
-                            fillColor: '#FFDD00',
-                            fillOpacity: 0.3,
+                            color: '#959595',
+                            fillColor: '#959595',
+                            fillOpacity: 0.75,
                             weight: 3
                         }}
                     />
