@@ -3,6 +3,7 @@
 import React, { useState, ChangeEvent, useEffect } from 'react';
 import { uploadUlog } from '@/services/api';
 import dynamic from 'next/dynamic';
+import { API_URL } from '@/services/api';
 
 const MapView = dynamic(() => import('@/components/map'), {
     ssr: false,
@@ -194,8 +195,8 @@ export default function Home() {
                                     <div style={{ display: 'flex', justifyContent: 'space-between' }}><span> Avg Alt: </span><span>{result?.average_altitude || '-'}</span></div>
                                 </div>
                                 <div style={{ display: 'flex', gap: '10px', marginTop: '5px' }}>
-                                    <button onClick={() => window.location.href = 'http://localhost:5000/download/kml'} style={{ flex: 1, backgroundColor: '#DADEDF', color: 'black', padding: '12px', fontWeight: 'bold', fontSize: isMobile ? '13px' : '16px', border: 'none', cursor: 'pointer', borderRadius: '8px' }}>KML</button>
-                                    <button onClick={() => window.location.href = 'http://localhost:5000/download/pdf'} style={{ flex: 1, backgroundColor: '#DADEDF', color: 'black', padding: '12px', fontWeight: 'bold', fontSize: isMobile ? '13px' : '16px', border: 'none', cursor: 'pointer', borderRadius: '8px' }}>PDF</button>
+                                    <button onClick={() => window.location.href = `${API_URL}/download/kml`} style={{ flex: 1, backgroundColor: '#DADEDF', color: 'black', padding: '12px', fontWeight: 'bold', fontSize: isMobile ? '13px' : '16px', border: 'none', cursor: 'pointer', borderRadius: '8px' }}>KML</button>
+                                    <button onClick={() => window.location.href = `${API_URL}/download/pdf`} style={{ flex: 1, backgroundColor: '#DADEDF', color: 'black', padding: '12px', fontWeight: 'bold', fontSize: isMobile ? '13px' : '16px', border: 'none', cursor: 'pointer', borderRadius: '8px' }}>PDF</button>
                                 </div>
                             </div>
                         </div>

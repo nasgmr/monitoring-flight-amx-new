@@ -11,6 +11,8 @@ from logic.export_to_pdf import create_pdf
 
 app = FastAPI()
 
+uploaded_file_name = None
+
 if not os.path.exists("data"):
     os.makedirs("data")
 
@@ -33,12 +35,16 @@ def cleanup_files(*file_paths):
 
 @app.get("/")
 async def root():
-    return {"message": "Backend API is running! /analyze"}
+    return {"message": "Backend API is running! Target endpoint: /analyze"}
 
 @app.post("/analyze")
 async def analyze_flight(file: UploadFile = File(...)):
+    global uploaded_file_name
+    
     if not os.path.exists("data"):
         os.makedirs("data")
+
+    uploaded_file_name = os.path.splitext(file.filename)[0]
 
     file_path = os.path.join("data", file.filename)
 
@@ -62,6 +68,8 @@ async def analyze_flight(file: UploadFile = File(...)):
             create_kml(final_data['polygon'], filename="flight_report.kml")
             create_pdf(final_data, filename="flight_report.pdf")
 
+            cleanup_files(file_path, csv_path)
+
             return {
                 "status": "success",
                 "data": {
@@ -70,27 +78,45 @@ async def analyze_flight(file: UploadFile = File(...)):
                 }
             }
         
+        cleanup_files(file_path)
         return {"status": "error", "message": "Failed to process uLog file."}
 
     except Exception as e:
+        cleanup_files(file_path)
         return {"status": "error", "message": str(e)}
     
 @app.get("/download/kml")
 async def download_kml(background_tasks: BackgroundTasks):
+    global uploaded_file_name
     kml_path = "flight_report.kml"
+    
     if os.path.exists(kml_path):
+        final_name = uploaded_file_name if uploaded_file_name else "flight_report"
+        
         background_tasks.add_task(cleanup_files, kml_path)
-        return FileResponse(path=kml_path, filename="Flight_Report.kml")
+        return FileResponse(
+            path=kml_path, 
+            media_type="application/vnd.google-earth.kml+xml",
+            filename=f"{final_name}.kml"
+        )
     return JSONResponse(status_code=404, content={"message": "File not found"})
 
 @app.get("/download/pdf")
 async def download_pdf(background_tasks: BackgroundTasks):
+    global uploaded_file_name
     pdf_path = "flight_report.pdf"
+    
     if os.path.exists(pdf_path):
+        final_name = uploaded_file_name if uploaded_file_name else "flight_report"
+        
         background_tasks.add_task(cleanup_files, pdf_path)
-        return FileResponse(path=pdf_path, media_type='application/pdf', filename="Flight_Report.pdf")
+        return FileResponse(
+            path=pdf_path, 
+            media_type='application/pdf', 
+            filename=f"{final_name}.pdf"
+        )
     return JSONResponse(status_code=404, content={"message": "File not found"})
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=5000)
+    uvicorn.run(app, host="0.0.0.0", port=7860)
