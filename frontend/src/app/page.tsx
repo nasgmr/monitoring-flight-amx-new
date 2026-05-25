@@ -106,7 +106,7 @@ export default function Home() {
                     <h1 style={{ fontSize: isMobile ? '22px' : '32px', fontWeight: 'bold', margin: 0 }}> Monitoring Flight </h1>
                 </div>
                 <button 
-                    onClick={() => window.location.href = 'http://localhost:3000'}
+                    onClick={() => window.location.href = 'http://amx-uav.vercel.app/'}
                     style={{ backgroundColor: '#959595', color: 'black', padding: isMobile ? '10px 16px' : '12px 24px', borderRadius: '8px', fontWeight: 'bold', fontSize: isMobile ? '14px' : '18px', border: 'none', cursor: 'pointer', width: isMobile ? '100%' : 'auto' }}>
                     Visit Our Page
                 </button>

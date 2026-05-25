@@ -7,4 +7,3 @@ pyulog
 scipy
 simplekml
 reportlab
-simplekml
