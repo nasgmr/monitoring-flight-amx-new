@@ -155,11 +155,13 @@ export default function Home() {
                                 backgroundColor: 'white', 
                                 padding: '8px', 
                                 borderRadius: '8px', 
-                                height: isMobile ? '350px' : '500px', 
-                                display: 'block', 
+                                height: isMobile ? '350px' : 'auto',
+                                minHeight: isMobile ? 'unset' : '400px',
+                                display: 'flex', 
                                 position: 'relative',
                                 boxSizing: 'border-box'
                             }}>
+                                <div style={{ position: 'absolute', inset: '8px' }}>
                                 {result?.polygon ? (
                                     <MapView polygon={result.polygon} startPoint={result.starting_point as [number, number]} />
                                 ) : (
@@ -167,6 +169,7 @@ export default function Home() {
                                         <h2 style={{ color: 'black', fontSize: isMobile ? '24px' : '36px', fontWeight: 'bold' }}> Mapping Area </h2>
                                     </div>
                                 )}
+                                </div>
                             </div>
 
                             <div style={{ 
