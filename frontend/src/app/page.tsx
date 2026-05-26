@@ -187,7 +187,7 @@ export default function Home() {
                                 <h2 style={{ fontSize: isMobile ? '24px' : '32px', fontWeight: 'bold', margin: '0', textAlign: 'center', color: 'white' }}>
                                     Mapping Result
                                 </h2>
-                                <button onClick={handleReset} style={{ backgroundColor: 'transparent', color: '#DADEDF', padding: '8px', fontWeight: 'bold', fontSize: '12px', border: '1px solid #DADEDF', cursor: 'pointer', borderRadius: '8px' }}>🔄 Analyze Another File</button>
+                                <button onClick={handleReset} style={{ backgroundColor: 'transparent', color: '#DADEDF', padding: '8px', fontWeight: 'bold', fontSize: '12px', border: '1px solid #DADEDF', cursor: 'pointer', borderRadius: '8px' }}>Analyze Another File</button>
                                 <div style={{ backgroundColor: '#8A8A8A', padding: isMobile ? '20px' : '30px 20px', textAlign: 'center', borderRadius: '8px' }}>
                                     <p style={{ margin: '0 0 10px 0', fontSize: isMobile ? '16px' : '22px',  fontWeight: 'bold', color: 'white' }}> Total Area Coverage </p>
                                     <p style={{ margin: 0, fontSize: isMobile ? '28px' : '36px', fontWeight: 'bold', color: '#DADEDF' }}>{result?.total_area_coverage || '0.00 Ha'}</p>
