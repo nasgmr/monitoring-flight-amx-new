@@ -10,7 +10,7 @@ const config: Config = {
     extend: {
       colors: {
         amxYellow: "#FFD700",
-        amxGray: "#4a4a4a",
+        amxGray: "#4A4A4A",
       },
     },
   },

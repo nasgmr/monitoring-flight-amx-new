@@ -8,7 +8,7 @@ import { API_URL } from '@/services/api';
 const MapView = dynamic(() => import('@/components/map'), {
     ssr: false,
     loading: () => (
-        <div style={{height: '100%', width: '100%', backgroundColor: '#e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#6b7280', fontWeight: 'bold'}}>
+        <div style={{height: '100%', width: '100%', backgroundColor: '#DADEDF', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666666', fontWeight: 'bold'}}>
             Loading Map...
         </div>
     )
@@ -82,14 +82,14 @@ export default function Home() {
 
     if (status === 'checking') {
         return (
-            <div style={{ minHeight: '100vh', backgroundColor: '#4a4a4a', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
+            <div style={{ minHeight: '100vh', backgroundColor: '#4A4A4A', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
                 <h2 style={{ fontSize: '32px', fontWeight: 'bold' }}>Checking Session...</h2>
             </div>
         );
     }
 
     return (
-        <div style={{ minHeight: '100vh', backgroundColor: '#4a4a4a', color: 'white', fontFamily: 'system-ui, -apple-system, sans-serif', display: 'flex', flexDirection: 'column', width: '100%', boxSizing: 'border-box', overflowX: 'hidden' }}>
+        <div style={{ minHeight: '100vh', backgroundColor: '#4A4A4A', color: 'white', fontFamily: 'system-ui, -apple-system, sans-serif', display: 'flex', flexDirection: 'column', width: '100%', boxSizing: 'border-box', overflowX: 'hidden' }}>
             <header style={{ 
                 backgroundColor: 'black', 
                 padding: isMobile ? '12px 20px' : '16px 40px', 
@@ -134,7 +134,7 @@ export default function Home() {
                                 <line x1="12" y1="3" x2="12" y2="15"></line>
                             </svg>
                         </label>
-                        <p style={{ marginTop: '16px', color: '#d1d5db', fontSize: '14px' }}>*file must be in .ulg (Max 100MB)</p>
+                        <p style={{ marginTop: '16px', color: '#D1D1D1', fontSize: '14px' }}>*file must be in .ulg (Max 100MB)</p>
                     </div>
                 )}
 
@@ -175,7 +175,7 @@ export default function Home() {
                             <div style={{ 
                                 flex: isMobile ? 'none' : '1', 
                                 width: '100%', 
-                                backgroundColor: '#323232', 
+                                backgroundColor: '#333333', 
                                 padding: isMobile ? '20px' : '30px', 
                                 display: 'flex', 
                                 flexDirection: 'column', 
@@ -206,7 +206,7 @@ export default function Home() {
                     </div>
                 )}
             </main>
-            <footer style={{ width: '100%', textAlign: 'center', padding: '20px 0', color: '#d1d5db', fontSize: '12px', boxSizing: 'border-box' }}>
+            <footer style={{ width: '100%', textAlign: 'center', padding: '20px 0', color: '#D1D1D1', fontSize: '12px', boxSizing: 'border-box' }}>
                 Copyright © 2026 AMX UAV
             </footer>
         </div>
