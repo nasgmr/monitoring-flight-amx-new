@@ -8,7 +8,7 @@ import { API_URL } from '@/services/api';
 const MapView = dynamic(() => import('@/components/map'), {
     ssr: false,
     loading: () => (
-        <div style={{height: '100%', width: '100%', border: '2px solid #FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFFFFF', fontWeight: 'bold'}}>
+        <div style={{height: '100%', width: '100%', border: '4px solid #FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFFFFF', fontWeight: 'bold'}}>
             Loading Map...
         </div>
     )
@@ -101,7 +101,7 @@ export default function Home() {
                 gap: '15px',
                 width: '100%',
                 boxSizing: 'border-box',
-                borderBottom: '4px solid #FFFFFF'
+                borderBottom: '3px solid #FFFFFF'
             }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '10px' : '20px'}}>
                     <img src="/logo.png" alt="AMX UAV Logo" style={{ height: isMobile ? '35px' : '50px', width: 'auto', objectFit: 'contain' }} />
@@ -113,7 +113,7 @@ export default function Home() {
                     style={{ 
                         backgroundColor: 'transparent', 
                         color: '#FFFFFF', 
-                        border: '2px solid #FFFFFF', 
+                        border: '4px solid #FFFFFF', 
                         padding: isMobile ? '10px 16px' : '12px 24px', 
                         borderRadius: '8px', 
                         fontWeight: 'bold', 
@@ -143,7 +143,7 @@ export default function Home() {
                         <label style={{ 
                             cursor: 'pointer', 
                             backgroundColor: 'transparent', 
-                            border: '2px solid #FFFFFF', 
+                            border: '4px solid #FFFFFF', 
                             width: '180px', 
                             height: '70px', 
                             borderRadius: '12px', 
@@ -200,7 +200,7 @@ export default function Home() {
                             <div style={{ 
                                 flex: isMobile ? 'none' : '1', 
                                 width: '100%', 
-                                border: '2px solid #FFFFFF', 
+                                border: '4px solid #FFFFFF', 
                                 padding: isMobile ? '20px' : '30px', 
                                 display: 'flex', 
                                 flexDirection: 'column', 
@@ -239,7 +239,7 @@ export default function Home() {
                 color: '#FFFFFF', 
                 fontSize: '12px', 
                 boxSizing: 'border-box',
-                borderTop: '4px solid #FFFFFF',
+                borderTop: '3px solid #FFFFFF',
                 marginTop: '20px'
             }}>
                 Copyright © 2026 AMX UAV
