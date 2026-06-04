@@ -8,7 +8,7 @@ import { API_URL } from '@/services/api';
 const MapView = dynamic(() => import('@/components/map'), {
     ssr: false,
     loading: () => (
-        <div style={{height: '100%', width: '100%', backgroundColor: '#DADEDF', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666666', fontWeight: 'bold'}}>
+        <div style={{height: '100%', width: '100%', backgroundColor: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFFFFF', fontWeight: 'bold'}}>
             Loading Map...
         </div>
     )
@@ -82,14 +82,14 @@ export default function Home() {
 
     if (status === 'checking') {
         return (
-            <div style={{ minHeight: '100vh', backgroundColor: '#4A4A4A', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
+            <div style={{ minHeight: '100vh', backgroundColor: '#000000', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
                 <h2 style={{ fontSize: '32px', fontWeight: 'bold' }}>Checking Session...</h2>
             </div>
         );
     }
 
     return (
-        <div style={{ minHeight: '100vh', backgroundColor: '#4A4A4A', color: 'white', fontFamily: 'system-ui, -apple-system, sans-serif', display: 'flex', flexDirection: 'column', width: '100%', boxSizing: 'border-box', overflowX: 'hidden' }}>
+        <div style={{ minHeight: '100vh', backgroundColor: '#000000', color: '#FFFFFF', fontFamily: 'system-ui, -apple-system, sans-serif', display: 'flex', flexDirection: 'column', width: '100%', boxSizing: 'border-box', overflowX: 'hidden' }}>
             <header style={{ 
                 backgroundColor: 'black', 
                 padding: isMobile ? '12px 20px' : '16px 40px', 
@@ -107,7 +107,7 @@ export default function Home() {
                 </div>
                 <button 
                     onClick={() => window.location.href = 'http://amx-uav.vercel.app/'}
-                    style={{ backgroundColor: '#959595', color: 'black', padding: isMobile ? '10px 16px' : '12px 24px', borderRadius: '8px', fontWeight: 'bold', fontSize: isMobile ? '14px' : '18px', border: 'none', cursor: 'pointer', width: isMobile ? '100%' : 'auto' }}>
+                    style={{ color: '#FFFFFF', padding: isMobile ? '10px 16px' : '12px 24px', borderRadius: '8px', fontWeight: 'bold', fontSize: isMobile ? '14px' : '18px', border: 'none', cursor: 'pointer', width: isMobile ? '100%' : 'auto' }}>
                     Visit Our Page
                 </button>
             </header>
@@ -126,7 +126,7 @@ export default function Home() {
                 {status === 'idle' && (
                     <div style={{ textAlign: 'center', width: '100%', boxSizing: 'border-box' }}>
                         <h2 style={{ fontSize: isMobile ? '28px' : '40px', fontWeight: 'bold', marginBottom: '24px' }}>Upload Data</h2>
-                        <label style={{ cursor: 'pointer', backgroundColor: '#959595', width: '180px', height: '70px', borderRadius: '12px', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '0 auto' }}>
+                        <label style={{ cursor: 'pointer', backgroundColor: '#FFFFFF', width: '180px', height: '70px', borderRadius: '12px', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '0 auto' }}>
                             <input type="file" className="hidden" accept=".ulg" style={{ display: 'none' }} onChange={handleFileChange} />
                             <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -140,7 +140,7 @@ export default function Home() {
 
                 {status === 'uploading' && (
                     <div style={{ textAlign: 'center', width: '100%', boxSizing: 'border-box' }}>
-                        <div style={{ border: '6px solid rgba(255, 255, 255, 0.1)', borderTop: '6px solid #959595', borderRadius: '50%', width: '50px', height: '50px', animation: 'spin 1s linear infinite', margin: '0 auto 20px' }}></div>
+                        <div style={{ border: '6px solid #F2F3F5', borderTop: '6px solid #FFFFFF', borderRadius: '50%', width: '50px', height: '50px', animation: 'spin 1s linear infinite', margin: '0 auto 20px' }}></div>
                         <h2 style={{ fontSize: '32px', fontWeight: 'bold' }}>Processing...</h2>
                         <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
                     </div>
@@ -166,7 +166,7 @@ export default function Home() {
                                     <MapView polygon={result.polygon} startPoint={result.starting_point as [number, number]} />
                                 ) : (
                                     <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                        <h2 style={{ color: 'black', fontSize: isMobile ? '24px' : '36px', fontWeight: 'bold' }}> Mapping Area </h2>
+                                        <h2 style={{ color: '#FFFFFF', fontSize: isMobile ? '24px' : '36px', fontWeight: 'bold' }}> Mapping Area </h2>
                                     </div>
                                 )}
                                 </div>
@@ -175,7 +175,7 @@ export default function Home() {
                             <div style={{ 
                                 flex: isMobile ? 'none' : '1', 
                                 width: '100%', 
-                                backgroundColor: '#333333', 
+                                border: '2px solid #FFFFFF', 
                                 padding: isMobile ? '20px' : '30px', 
                                 display: 'flex', 
                                 flexDirection: 'column', 
@@ -187,26 +187,26 @@ export default function Home() {
                                 <h2 style={{ fontSize: isMobile ? '24px' : '32px', fontWeight: 'bold', margin: '0', textAlign: 'center', color: 'white' }}>
                                     Mapping Result
                                 </h2>
-                                <button onClick={handleReset} style={{ backgroundColor: 'transparent', color: '#DADEDF', padding: '8px', fontWeight: 'bold', fontSize: '12px', border: '1px solid #DADEDF', cursor: 'pointer', borderRadius: '8px' }}>Analyze Another File</button>
-                                <div style={{ backgroundColor: '#8A8A8A', padding: isMobile ? '20px' : '30px 20px', textAlign: 'center', borderRadius: '8px' }}>
+                                <button onClick={handleReset} style={{ backgroundColor: 'transparent', color: '#FFFFFF', padding: '8px', fontWeight: 'bold', fontSize: '12px', border: '1px solid #FFFFFF', cursor: 'pointer', borderRadius: '8px' }}>Analyze Another File</button>
+                                <div style={{ backgroundColor: 'transparent', border: '2px solid #FFFFFF', padding: isMobile ? '20px' : '30px 20px', textAlign: 'center', borderRadius: '8px' }}>
                                     <p style={{ margin: '0 0 10px 0', fontSize: isMobile ? '16px' : '22px',  fontWeight: 'bold', color: 'white' }}> Total Area Coverage </p>
-                                    <p style={{ margin: 0, fontSize: isMobile ? '28px' : '36px', fontWeight: 'bold', color: '#DADEDF' }}>{result?.total_area_coverage || '0.00 Ha'}</p>
+                                    <p style={{ margin: 0, fontSize: isMobile ? '28px' : '36px', fontWeight: 'bold', color: '#FFFFFF' }}>{result?.total_area_coverage || '0.00 Ha'}</p>
                                 </div>
-                                <div style={{ backgroundColor: '#8A8A8A', padding: isMobile ? '15px' : '25px', display: 'flex', flexDirection: 'column', gap: '10px', borderRadius: '8px', color: 'white', fontSize: isMobile ? '15px' : '18px' }}>
+                                <div style={{ backgroundColor: 'transparent', border: '2px solid #FFFFFF', padding: isMobile ? '15px' : '25px', display: 'flex', flexDirection: 'column', gap: '10px', borderRadius: '8px', color: 'white', fontSize: isMobile ? '15px' : '18px' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between' }}><span> Duration: </span><span>{result?.flight_duration || '-'}</span></div>
                                     <div style={{ display: 'flex', justifyContent: 'space-between' }}><span> Distance: </span><span>{result?.total_distance || '-'}</span></div>
                                     <div style={{ display: 'flex', justifyContent: 'space-between' }}><span> Avg Alt: </span><span>{result?.average_altitude || '-'}</span></div>
                                 </div>
                                 <div style={{ display: 'flex', gap: '10px', marginTop: '5px' }}>
-                                    <button onClick={() => window.location.href = `${API_URL}/download/kml`} style={{ flex: 1, backgroundColor: '#DADEDF', color: 'black', padding: '12px', fontWeight: 'bold', fontSize: isMobile ? '13px' : '16px', border: 'none', cursor: 'pointer', borderRadius: '8px' }}>KML</button>
-                                    <button onClick={() => window.location.href = `${API_URL}/download/pdf`} style={{ flex: 1, backgroundColor: '#DADEDF', color: 'black', padding: '12px', fontWeight: 'bold', fontSize: isMobile ? '13px' : '16px', border: 'none', cursor: 'pointer', borderRadius: '8px' }}>PDF</button>
+                                    <button onClick={() => window.location.href = `${API_URL}/download/kml`} style={{ flex: 1, backgroundColor: 'transparent', color: '#FFFFFF', padding: '12px', fontWeight: 'bold', fontSize: isMobile ? '13px' : '16px', border: '2px solid #FFFFFF', cursor: 'pointer', borderRadius: '8px' }}>KML</button>
+                                    <button onClick={() => window.location.href = `${API_URL}/download/pdf`} style={{ flex: 1, backgroundColor: 'transparent', color: '#FFFFFF', padding: '12px', fontWeight: 'bold', fontSize: isMobile ? '13px' : '16px', border: '2px solid #FFFFFF', cursor: 'pointer', borderRadius: '8px' }}>PDF</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 )}
             </main>
-            <footer style={{ width: '100%', textAlign: 'center', padding: '20px 0', color: '#D1D1D1', fontSize: '12px', boxSizing: 'border-box' }}>
+            <footer style={{ width: '100%', textAlign: 'center', padding: '20px 0', color: '#FFFFFF', fontSize: '12px', boxSizing: 'border-box' }}>
                 Copyright © 2026 AMX UAV
             </footer>
         </div>
