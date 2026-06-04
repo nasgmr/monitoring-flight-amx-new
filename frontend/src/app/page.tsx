@@ -90,6 +90,7 @@ export default function Home() {
 
     return (
         <div style={{ minHeight: '100vh', backgroundColor: '#000000', color: '#FFFFFF', fontFamily: 'system-ui, -apple-system, sans-serif', display: 'flex', flexDirection: 'column', width: '100%', boxSizing: 'border-box', overflowX: 'hidden' }}>
+            
             <header style={{ 
                 backgroundColor: 'black', 
                 padding: isMobile ? '12px 20px' : '16px 40px', 
@@ -99,15 +100,27 @@ export default function Home() {
                 justifyContent: 'space-between',
                 gap: '15px',
                 width: '100%',
-                boxSizing: 'border-box'
+                boxSizing: 'border-box',
+                borderBottom: '4px solid #FFFFFF'
             }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '10px' : '20px'}}>
                     <img src="/logo.png" alt="AMX UAV Logo" style={{ height: isMobile ? '35px' : '50px', width: 'auto', objectFit: 'contain' }} />
                     <h1 style={{ fontSize: isMobile ? '22px' : '32px', fontWeight: 'bold', margin: 0 }}> Monitoring Flight </h1>
                 </div>
+                
                 <button 
                     onClick={() => window.location.href = 'http://amx-uav.vercel.app/'}
-                    style={{ backgroundColor: 'transparent', color: '#FFFFFF', border: '2px solid #FFFFFF', padding: isMobile ? '10px 16px' : '12px 24px', borderRadius: '8px', fontWeight: 'bold', fontSize: isMobile ? '14px' : '18px', border: 'none', cursor: 'pointer', width: isMobile ? '100%' : 'auto' }}>
+                    style={{ 
+                        backgroundColor: 'transparent', 
+                        color: '#FFFFFF', 
+                        border: '2px solid #FFFFFF', 
+                        padding: isMobile ? '10px 16px' : '12px 24px', 
+                        borderRadius: '8px', 
+                        fontWeight: 'bold', 
+                        fontSize: isMobile ? '14px' : '18px', 
+                        cursor: 'pointer', 
+                        width: isMobile ? '100%' : 'auto' 
+                    }}>
                     Visit Our Page
                 </button>
             </header>
@@ -126,7 +139,19 @@ export default function Home() {
                 {status === 'idle' && (
                     <div style={{ textAlign: 'center', width: '100%', boxSizing: 'border-box' }}>
                         <h2 style={{ fontSize: isMobile ? '28px' : '40px', fontWeight: 'bold', marginBottom: '24px' }}>Upload Data</h2>
-                        <label style={{ cursor: 'pointer', backgroundColor: 'transparent', border: '2px solid #FFFFFF' width: '180px', height: '70px', borderRadius: '12px', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '0 auto' }}>
+                        
+                        <label style={{ 
+                            cursor: 'pointer', 
+                            backgroundColor: 'transparent', 
+                            border: '2px solid #FFFFFF', 
+                            width: '180px', 
+                            height: '70px', 
+                            borderRadius: '12px', 
+                            display: 'flex', 
+                            justifyContent: 'center', 
+                            alignItems: 'center', 
+                            margin: '0 auto' 
+                        }}>
                             <input type="file" className="hidden" accept=".ulg" style={{ display: 'none' }} onChange={handleFileChange} />
                             <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -189,7 +214,7 @@ export default function Home() {
                                 </h2>
                                 <button onClick={handleReset} style={{ backgroundColor: 'transparent', color: '#FFFFFF', padding: '8px', fontWeight: 'bold', fontSize: '12px', border: '1px solid #FFFFFF', cursor: 'pointer', borderRadius: '8px' }}>Analyze Another File</button>
                                 <div style={{ backgroundColor: 'transparent', border: '2px solid #FFFFFF', padding: isMobile ? '20px' : '30px 20px', textAlign: 'center', borderRadius: '8px' }}>
-                                    <p style={{ margin: '0 0 10px 0', fontSize: isMobile ? '16px' : '22px',  fontWeight: 'bold', color: 'white' }}> Total Area Coverage </p>
+                                    <p style={{ margin: '0 0 10px 0', fontSize: isMobile ? '16px' : '22px',   fontWeight: 'bold', color: 'white' }}> Total Area Coverage </p>
                                     <p style={{ margin: 0, fontSize: isMobile ? '28px' : '36px', fontWeight: 'bold', color: '#FFFFFF' }}>{result?.total_area_coverage || '0.00 Ha'}</p>
                                 </div>
                                 <div style={{ backgroundColor: 'transparent', border: '2px solid #FFFFFF', padding: isMobile ? '15px' : '25px', display: 'flex', flexDirection: 'column', gap: '10px', borderRadius: '8px', color: 'white', fontSize: isMobile ? '15px' : '18px' }}>
@@ -206,7 +231,17 @@ export default function Home() {
                     </div>
                 )}
             </main>
-            <footer style={{ width: '100%', textAlign: 'center', padding: '20px 0', color: '#FFFFFF', fontSize: '12px', boxSizing: 'border-box' }}>
+
+            <footer style={{ 
+                width: '100%', 
+                textAlign: 'center', 
+                padding: '20px 0', 
+                color: '#FFFFFF', 
+                fontSize: '12px', 
+                boxSizing: 'border-box',
+                borderTop: '4px solid #FFFFFF',
+                marginTop: '20px'
+            }}>
                 Copyright © 2026 AMX UAV
             </footer>
         </div>
