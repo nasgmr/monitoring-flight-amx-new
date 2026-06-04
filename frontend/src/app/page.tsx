@@ -4,6 +4,12 @@ import React, { useState, ChangeEvent, useEffect } from 'react';
 import { uploadUlog } from '@/services/api';
 import dynamic from 'next/dynamic';
 import { API_URL } from '@/services/api';
+import { Akatab } from 'next/font/google';
+
+const akatab = Akatab({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+});
 
 const MapView = dynamic(() => import('@/components/map'), {
     ssr: false,
@@ -89,7 +95,7 @@ export default function Home() {
     }
 
     return (
-        <div style={{ minHeight: '100vh', backgroundColor: '#000000', color: '#FFFFFF', fontFamily: 'system-ui, -apple-system, sans-serif', display: 'flex', flexDirection: 'column', width: '100%', boxSizing: 'border-box', overflowX: 'hidden' }}>
+        <div style={{ minHeight: '100vh', backgroundColor: '#000000', color: '#FFFFFF', fontFamily: akatab.style.fontFamily, display: 'flex', flexDirection: 'column', width: '100%', boxSizing: 'border-box', overflowX: 'hidden' }}>
             
             <header style={{ 
                 backgroundColor: 'black', 
