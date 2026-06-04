@@ -8,7 +8,7 @@ import { API_URL } from '@/services/api';
 const MapView = dynamic(() => import('@/components/map'), {
     ssr: false,
     loading: () => (
-        <div style={{height: '100%', width: '100%', backgroundColor: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFFFFF', fontWeight: 'bold'}}>
+        <div style={{height: '100%', width: '100%', border: '2px solid #FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFFFFF', fontWeight: 'bold'}}>
             Loading Map...
         </div>
     )
@@ -134,13 +134,13 @@ export default function Home() {
                                 <line x1="12" y1="3" x2="12" y2="15"></line>
                             </svg>
                         </label>
-                        <p style={{ marginTop: '16px', color: '#D1D1D1', fontSize: '14px' }}>*file must be in .ulg (Max 100MB)</p>
+                        <p style={{ marginTop: '16px', color: '#FFFFFF', fontSize: '14px' }}>*file must be in .ulg (Max 100MB)</p>
                     </div>
                 )}
 
                 {status === 'uploading' && (
                     <div style={{ textAlign: 'center', width: '100%', boxSizing: 'border-box' }}>
-                        <div style={{ border: '6px solid #F2F3F5', borderTop: '6px solid #FFFFFF', borderRadius: '50%', width: '50px', height: '50px', animation: 'spin 1s linear infinite', margin: '0 auto 20px' }}></div>
+                        <div style={{ border: '6px solid #000000', borderTop: '6px solid #FFFFFF', borderRadius: '50%', width: '50px', height: '50px', animation: 'spin 1s linear infinite', margin: '0 auto 20px' }}></div>
                         <h2 style={{ fontSize: '32px', fontWeight: 'bold' }}>Processing...</h2>
                         <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
                     </div>
