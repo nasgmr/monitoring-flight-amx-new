@@ -107,7 +107,7 @@ export default function Home() {
                 </div>
                 <button 
                     onClick={() => window.location.href = 'http://amx-uav.vercel.app/'}
-                    style={{ color: '#FFFFFF', padding: isMobile ? '10px 16px' : '12px 24px', borderRadius: '8px', fontWeight: 'bold', fontSize: isMobile ? '14px' : '18px', border: 'none', cursor: 'pointer', width: isMobile ? '100%' : 'auto' }}>
+                    style={{ backgroundColor: 'transparent', color: '#FFFFFF', border: '2px solid #FFFFFF', padding: isMobile ? '10px 16px' : '12px 24px', borderRadius: '8px', fontWeight: 'bold', fontSize: isMobile ? '14px' : '18px', border: 'none', cursor: 'pointer', width: isMobile ? '100%' : 'auto' }}>
                     Visit Our Page
                 </button>
             </header>
@@ -126,7 +126,7 @@ export default function Home() {
                 {status === 'idle' && (
                     <div style={{ textAlign: 'center', width: '100%', boxSizing: 'border-box' }}>
                         <h2 style={{ fontSize: isMobile ? '28px' : '40px', fontWeight: 'bold', marginBottom: '24px' }}>Upload Data</h2>
-                        <label style={{ cursor: 'pointer', backgroundColor: '#FFFFFF', width: '180px', height: '70px', borderRadius: '12px', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '0 auto' }}>
+                        <label style={{ cursor: 'pointer', backgroundColor: 'transparent', border: '2px solid #FFFFFF' width: '180px', height: '70px', borderRadius: '12px', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '0 auto' }}>
                             <input type="file" className="hidden" accept=".ulg" style={{ display: 'none' }} onChange={handleFileChange} />
                             <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
